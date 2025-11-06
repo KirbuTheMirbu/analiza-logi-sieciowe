@@ -14,13 +14,10 @@ export default function LogProcessor() {
   function parseTimestamp(s) {
     const d = new Date(s);
     if (!isNaN(d)) return d;
-    //próba common log format: [10/Oct/2000:13:55:36 -0700]
-    const m = s.match(/(\d{2}\/\w{3}\/\d{4}:\d{2}:\d{2}:\d{2})/);
-    if (m) {
-      return new Date(m[1].replace(/\//g, " ").replace(":", " "));
-    }
-    return null;
+    const m = s.match(/^[A-Z][a-z]{2} \d{1,2} \d{2}:\d{2}:\d{2}/); // "Nov 06 09:12:04"
+    if (m) return new Date(`${m[0]} 2025`); // dodaj rok bieżący
   }
+  
 
   //próba sparsowania jednej linii logu w CLF lub key=value
   function parseLogLine(line) {
@@ -65,7 +62,28 @@ export default function LogProcessor() {
       return normalizeRecord(kv);
     }
 
-    //5) Fallback: próba znalezienia IP i timestampa
+    //5) Syslog-like: "Nov 06 09:12:04 sshd[2145]: Failed password for invalid user admin from 198.51.100.23 port 45678 ssh2"
+    const syslogMatch = line.match(/from (\d{1,3}(?:\.\d{1,3}){3}) port (\d+)/);
+    if (syslogMatch) {
+      const [_, srcIP, port] = syslogMatch;
+      const timeMatch = line.match(/^[A-Z][a-z]{2} \d{1,2} \d{2}:\d{2}:\d{2}/);
+      const time = timeMatch ? timeMatch[0] : undefined;
+      const failed = line.toLowerCase().includes("failed") || line.toLowerCase().includes("brute");
+      const status = failed ? "Failed" : "OK";
+      return normalizeRecord({ srcIP, port, time, status, request: line });
+    }
+
+    //6) Kernel or IDS logs
+    const kernelMatch = line.match(/SRC=(\d{1,3}(?:\.\d{1,3}){3}).*DPT=(\d+)/);
+    if (kernelMatch) {
+      const [_, srcIP, port] = kernelMatch;
+      const timeMatch = line.match(/^[A-Z][a-z]{2} \d{1,2} \d{2}:\d{2}:\d{2}/);
+      const time = timeMatch ? timeMatch[0] : undefined;
+      return normalizeRecord({ srcIP, port, time, request: line });
+    }
+
+
+    //7) Fallback: próba znalezienia IP i timestampa
     const ip = line.match(/(\d{1,3}(?:\.\d{1,3}){3})/);
     const ts = line.match(/\[(.*?)\]/);
     return normalizeRecord({ srcIP: ip ? ip[1] : undefined, time: ts ? ts[1] : undefined, raw: line });
@@ -102,8 +120,8 @@ export default function LogProcessor() {
 
     //Brute force: duża liczba nieudanych prób logowania z jednego adresu IP
     //Heurystyka: jeśli dla IP > N prób z status 'Failed' lub status kod 401/403 w oknie T sekund
-    const BF_THRESHOLD = 10; //próg liczby prób
-    const BF_WINDOW_MS = 15 * 60 * 1000; //15 minut
+    const BF_THRESHOLD = 5; //próg liczby prób
+    const BF_WINDOW_MS = 1 * 60 * 1000; //15 minut
 
     const byIP = {};
     recs.forEach((r) => {
@@ -240,7 +258,6 @@ export default function LogProcessor() {
         <em>Na potem:</em>
         <ul>
           <li>zamień anomalie na na chart.js</li>
-          <li>spróbuj podłączyć AbuseIPDB i zastąpić localBlacklist</li>
           <li>thresholdy zmieniaj w funkcjach wykrywania anomalii</li>
         </ul>
       </div>
