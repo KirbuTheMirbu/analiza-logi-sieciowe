@@ -257,6 +257,7 @@ export default function LogProcessor() {
       <div style={{ marginTop: 12 }}>
         <em>Na potem:</em>
         <ul>
+          <li>napraw działanie port scana</li>
           <li>zamień anomalie na na chart.js</li>
           <li>thresholdy zmieniaj w funkcjach wykrywania anomalii</li>
         </ul>
