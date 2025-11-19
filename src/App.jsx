@@ -121,7 +121,7 @@ export default function LogProcessor() {
     //Brute force: duża liczba nieudanych prób logowania z jednego adresu IP
     //Heurystyka: jeśli dla IP > N prób z status 'Failed' lub status kod 401/403 w oknie T sekund
     const BF_THRESHOLD = 5; //próg liczby prób
-    const BF_WINDOW_MS = 1 * 60 * 1000; //15 minut
+    const BF_WINDOW_MS = 1 * 60 * 1000; //10 minut
 
     const byIP = {};
     recs.forEach((r) => {
