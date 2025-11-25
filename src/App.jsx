@@ -319,7 +319,7 @@ export default function LogProcessor() {
       timeline[key] = (timeline[key] || 0) + 1;
 });
 
-// sortowanie chronologiczne (ważne!)
+// sortowanie chronologiczne
 const sortedKeys = Object.keys(timeline).sort(
   (a, b) => {
     const [ah, am] = a.split(":").map(Number);
