@@ -2,7 +2,7 @@
   "name": "analiza-logi-sieciowe",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://KirbuTheMirbu.github.io/react-gh-pages",
+  "homepage": "https://KirbuTheMirbu.github.io/analiza-logi-sieciowe",
   "type": "module",
   "scripts": {
     "dev": "vite",
