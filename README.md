@@ -191,7 +191,7 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 <!-- Shields.io badges. You can a comprehensive list with many more badges at: https://github.com/inttter/md-badges -->
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
-[Vite.js]: 
+[Vite.js]: https://img.shields.io/badge/Vite-20232A?style=for-the-badge&logo=vite&logoColor=8b75fe
 [Vite-url]: https://vite.dev/
-[Chart.js]: 
+[Chart.js]: https://img.shields.io/badge/Chart-20232A?style=for-the-badge&logo=chart&logoColor=8b75fe
 [Chart-url]: https://www.chartjs.org/
