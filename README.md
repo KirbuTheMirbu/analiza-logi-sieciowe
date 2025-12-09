@@ -1,10 +1,5 @@
 <a id="readme-top"></a>
 
-[![Issues][issues-shield]][issues-url]
-[![project_license][license-shield]][license-url]
-
-
-
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
@@ -147,10 +142,6 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[issues-shield]: https://img.shields.io/github/issues/github_username/repo_name.svg?style=for-the-badge
-[issues-url]: https://github.com/KirbuTheMirbu/analiza-logi-sieciowe/issues
-[license-shield]: https://img.shields.io/github/license/github_username/repo_name.svg?style=for-the-badge
-[license-url]: https://github.com/KirbuTheMirbu/analiza-logi-sieciowe//master/LICENSE.txt
 [product-screenshot]: images/screenshot.png
 
 <!-- Shields.io badges. You can a comprehensive list with many more badges at: https://github.com/inttter/md-badges -->
